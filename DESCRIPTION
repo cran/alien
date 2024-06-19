@@ -1,6 +1,6 @@
 Package: alien
 Title: Estimate Invasive and Alien Species (IAS) Introduction Rates
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     person("Yehezkel", "Buba", , "hezibuba@mail.tau.ac.il", role = c("aut", "cre","cph"),
            comment = c(ORCID = "0000-0002-1003-8809"))
@@ -19,8 +19,8 @@ Suggests: BH, knitr, purrr, Rcpp, RcppEigen, RcppParallel, rmarkdown,
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-04-11 10:45:40 UTC; eze36
+Packaged: 2024-06-19 15:49:28 UTC; eze36
 Author: Yehezkel Buba [aut, cre, cph] (<https://orcid.org/0000-0002-1003-8809>)
 Maintainer: Yehezkel Buba <hezibuba@mail.tau.ac.il>
 Repository: CRAN
-Date/Publication: 2024-04-11 11:50:02 UTC
+Date/Publication: 2024-06-19 16:20:02 UTC

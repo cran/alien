@@ -2,7 +2,7 @@
 % Please edit documentation in R/snc.R
 \name{snc}
 \alias{snc}
-\title{Fit  Solow and Costello (2004) model}
+\title{Fit a model to discovery records}
 \usage{
 snc(
   y,
@@ -16,11 +16,11 @@ snc(
 )
 }
 \arguments{
-\item{y}{a time series of the annual number of discovered alien and invasive species (IAS)}
+\item{y}{either a vector describing the number of discovered alien and invasive species (IAS) over a given time period, or the name (quoted or unquoted) of the corresponding column in the provided data.}
 
-\item{mu}{a formula defining the predictors for \eqn{\mu_t}, the annual introduction rate. Formulas should be provided in the syntax \code{~ x1 + x2 + ... + xn}.}
+\item{mu}{a formula defining the predictors for \eqn{\mu_t}, the annual introduction rate. Formulas should be provided in the syntax \code{~ x1 + x2 + ... + xn}. Use \code{~ 1} for an intercept only model.}
 
-\item{pi}{a formula defining the predictors for \eqn{\Pi_{st}}, the annual probability of detection. Formulas should be provided in the syntax \code{~ x1 + x2 + ... + xn}.}
+\item{pi}{a formula defining the predictors for \eqn{\Pi_{st}}, the annual probability of detection. Formulas should be provided in the syntax \code{~ x1 + x2 + ... + xn}. Use \code{~ 1} for an intercept only model.}
 
 \item{data}{a data frame containing the variables in the model(s).}
 
@@ -43,26 +43,38 @@ snc(
 }
 }
 \description{
-Fit the model described in Solow and Costello (2004) to data.
-It can use external data on either \eqn{\mu_t} or \eqn{\Pi_{st}}.
+Fit a model to a time series describing first records of alien species.
+If no external data is provided, the function fits the model described in Solow and Costello (2004).
+When external data on either \eqn{\mu_t} or \eqn{\Pi_{st}} is provided, the function fits the
+modified model (sampling-proxy model in the case of \eqn{\Pi_{st}}) as described in Buba et al (2024).
 }
 \details{
 This function expands on the model described in Solow and Costello (2004) by facilitating the
-inclusion of external data to describe either \eqn{\mu_t} or \eqn{\Pi_{st}}.
-The model with external data is described fully in Buba et al (2024).
+inclusion of external data to describe either introduction rate \eqn{\mu_t} or detection probability \eqn{\Pi_{st}}.
+The model with external data for detection probability (sampling-proxy model) is described fully in Buba et al (2024).
+The use of external data to describe the introduction rate has not been thoroughly evaluated.
 When no formula is defined for either, the function automatically fits the original Solow and Costello (2004)
 model using the length of the vector data as the independent variable \eqn{t}.
-The original model uses Rcpp for shorter run time.
-When numerous estimations are required for a more elaborate model (i.e, for simulation studies or bootstrapping),
-users may be benefit from building upon the function described in \code{filename.cpp}
+All models return estimated parameters for both the introduction rate and the detection probability,
+with the parameter of interest usually being the change of introduction rate - \eqn{\beta_1}.
+For more details see the Basic Usage vignette:
+\code{vignette("basic_usage", package = "alien")}
 }
 \examples{
 \donttest{
+# Solow and Costello (2004) model:
 data(sfestuary)
 example_model <- snc(sfestuary)
 print(example_model)
+
+# Buba et al (2024) sampling-proxy model:
+data(medfish)
+example_buba <- snc(y = aliens, pi = ~ natives, data = medfish)
+print(example_buba)
 }
 }
 \references{
 Solow, A. R., & Costello, C. J. (2004). Estimating the rate of species introductions from the discovery record. Ecology, 85(7), 1822–1825. https://doi.org/10.1890/03-3102
+
+Buba, Y., Kiflwai, M., McGeoch, M. A., Belmaker, J. (2024) Evaluating models for estimating introduction rates of alien species from discovery records. https://doi.org/10.1111/geb.13859
 }
